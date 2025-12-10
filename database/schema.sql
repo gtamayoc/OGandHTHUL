@@ -1,0 +1,48 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    content TEXT NOT NULL,
+    excerpt TEXT,
+    status TEXT DEFAULT 'draft',
+    image_base64 TEXT,
+    video_url TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS slider_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    subtitle TEXT,
+    image_base64 TEXT,
+    link TEXT,
+    display_order INTEGER DEFAULT 0,
+    active INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    author TEXT DEFAULT 'Anonymous',
+    content TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(post_id) REFERENCES posts(id)
+);
+
+CREATE TABLE IF NOT EXISTS about_content (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT
+);
+
+CREATE TABLE IF NOT EXISTS visits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    route TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ip TEXT
+);

@@ -1,0 +1,5 @@
+node_modules
+.env
+blog.db
+start.bat
+DS_Store

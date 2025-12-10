@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= typeof settings !=='undefined' && settings.site_title ? settings.site_title : 'Blog' %>
+    </title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Summernote Lite & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script>
+        // Apply saved theme immediately to prevent white flash
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+        })();
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark-theme');
+            localStorage.setItem('theme', html.classList.contains('dark-theme') ? 'dark' : 'light');
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <!-- Logo -->
+            <div class="logo">
+                <a href="/">
+                    <% if (typeof settings !=='undefined' && settings.logo_url) { %>
+                        <img src="<%= settings.logo_url %>" alt="<%= settings.site_title %>"
+                            style="max-height: 40px; vertical-align: middle;">
+                        <% } else { %>
+                            <%= typeof settings !=='undefined' && settings.site_title ? settings.site_title : 'My Blog'
+                                %>
+                                <% } %>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+
+                    <% if (typeof user !=='undefined' && user) { %>
+                        <li><a href="/admin/dashboard">Dashboard</a></li>
+                        <!-- Settings only for Admin -->
+                        <li><a href="/admin/settings">Settings</a></li>
+                        <li><a href="/auth/logout">Logout</a></li>
+                        <% } else { %>
+                            <li><a href="/admin/login">Admin</a></li>
+                            <% } %>
+                </ul>
+            </div>
+
+            <!-- Utilities: Theme & Language -->
+            <div class="nav-utils">
+                <div id="google_translate_element"></div>
+                <button onclick="toggleTheme()" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <span class="icon">🌓</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <main>

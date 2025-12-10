@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+
+    <article class="post-detail">
+        <header class="post-header">
+            <h1>
+                <%= post.title %>
+            </h1>
+            <div class="meta" style="margin-top: 0.5rem; color: var(--text-color); opacity: 0.8; font-size: 1rem;">
+                <span class="author" style="font-weight: 600;">By Giuseppe Tamayo C.</span> |
+                <span class="date">
+                    <%= new Date(post.created_at).toLocaleDateString() %>
+                </span>
+            </div>
+        </header>
+
+        <% if (post.image_base64) { %>
+            <img src="<%= post.image_base64 %>" class="hero-image" alt="<%= post.title %>">
+            <% } %>
+
+                <div class="post-content">
+                    <!-- Content now includes embedded videos/images from Summernote/WYSIWYG -->
+                    <%- post.content %>
+                </div>
+    </article>
+
+    <section class="comments-section">
+        <h3>Comments</h3>
+
+        <form action="/post/<%= post.slug %>/comment" method="POST" class="comment-form">
+            <input type="text" name="author" placeholder="Name (Optional)">
+            <textarea name="content" required placeholder="Leave a comment..."></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+
+        <div class="comments-list">
+            <% if (comments.length===0) { %>
+                <p>No comments yet. Be the first!</p>
+                <% } %>
+                    <% comments.forEach(comment=> { %>
+                        <div class="comment">
+                            <strong>
+                                <%= comment.author %>
+                            </strong>
+                            <span class="date">
+                                <%= new Date(comment.created_at).toLocaleString() %>
+                            </span>
+                            <p>
+                                <%= comment.content %>
+                            </p>
+                        </div>
+                        <% }) %>
+        </div>
+    </section>
+
+    <%- include('../partials/footer') %>

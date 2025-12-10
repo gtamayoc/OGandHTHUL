@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+
+    <div class="admin-dashboard">
+        <div class="admin-header">
+            <h1>Dashboard</h1>
+            <div class="actions">
+                <a href="/admin/posts/new" class="btn">New Post</a>
+                <a href="/admin/about" class="btn">Edit About</a>
+            </div>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% posts.forEach(post=> { %>
+                    <tr>
+                        <td>
+                            <%= post.title %>
+                        </td>
+                        <td><span class="status <%= post.status %>">
+                                <%= post.status %>
+                            </span></td>
+                        <td>
+                            <%= new Date(post.created_at).toLocaleDateString() %>
+                        </td>
+                        <td>
+                            <a href="/admin/posts/edit/<%= post.id %>">Edit</a> |
+                            <a href="/admin/posts/delete/<%= post.id %>"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <%- include('../partials/footer') %>
