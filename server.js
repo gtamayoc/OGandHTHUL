@@ -56,6 +56,14 @@ app.use((req, res) => {
     res.status(404).render('public/404', { title: 'Page Not Found' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+// Database Initialization
+const initializeDatabase = require('./database/init');
+
+initializeDatabase().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}).catch(err => {
+    console.error('Failed to initialize database:', err);
+    process.exit(1);
 });
