@@ -63,6 +63,8 @@ db.serialize(() => {
         db.run("DELETE FROM comments WHERE created_at <= date('now', '-7 days')", (err) => {
             if (err) console.error('Error cleaning up comments:', err);
             else console.log('Old comments cleanup check complete.');
+            console.log('Database initialization finished.');
+            process.exit(0); // Exit cleanly for command chaining
         });
     });
 });

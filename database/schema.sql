@@ -46,3 +46,8 @@ CREATE TABLE IF NOT EXISTS visits (
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     ip TEXT
 );
+
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT
+);
